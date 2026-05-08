@@ -8,16 +8,21 @@ export default function PostForm() {
 
     const [post, setPost] = useState("");
 
+    const [status, setStatus] = useState("");
+
 
 
     const handleSubmit = async () => {
 
         if (!name || !post) {
 
-            alert("Fill all fields");
+            setStatus("Fill all fields");
+            setTimeout(() => setStatus(""), 3000);
 
             return;
         }
+
+        setStatus("Posting...");
 
         try {
 
@@ -26,18 +31,22 @@ export default function PostForm() {
                 post
             });
 
-            alert("Post Added Successfully");
+            setStatus("Post Done");
 
             setName("");
 
             setPost("");
+
+            setTimeout(() => setStatus(""), 3000);
         }
 
         catch (error) {
 
             console.log(error);
 
-            alert("Something went wrong");
+            setStatus("Something went wrong");
+
+            setTimeout(() => setStatus(""), 3000);
         }
     };
 
@@ -141,6 +150,12 @@ export default function PostForm() {
                 Post Now
 
             </button>
+
+            {status && (
+                <p className="mt-4 text-center text-cyan-300 font-medium animate-pulse">
+                    {status}
+                </p>
+            )}
 
         </div>
     );
